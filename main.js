@@ -2,7 +2,7 @@
 const express = require("express")
 const puppeteer = require('puppeteer')
 const app = express()
-const api = app.listen(3000, () => console.log("API OK"))
+const api = app.listen(3002, () => console.log("API OK"))
 app.get("/", async (req, res) => {
     const browser = await puppeteer.launch({
         args: [
@@ -16,4 +16,5 @@ app.get("/", async (req, res) => {
     await page.waitForTimeout(Number(req.query.timeout || 0));
     await page.goto(req.query.url);
     res.status(200).send(await page.screenshot({ fullPage: true }));
+    browser.close();
 })
